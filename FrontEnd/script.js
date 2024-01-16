@@ -9,10 +9,12 @@ async function getworks() {
 
     
     const sectionGallery = document.querySelector(".gallery");//Rentrer dans la balise gallery
-    sectionGallery.innerHTML = ""; //Vider le contenu de la gallery existante
+    
 
     // Afficher la gallerie
-    works.forEach(works => {
+    function display (travaux){
+      sectionGallery.innerHTML = ""; //Vider le contenu de la gallery existante
+      travaux.forEach(works => {
         const figure = document.createElement("figure");// Creer nouvelle balise figure 
         const imageElement = document.createElement("img");
         imageElement.src = works.imageUrl;
@@ -23,22 +25,60 @@ async function getworks() {
         sectionGallery.appendChild(figure);
         figure.appendChild(imageElement);
         figure.appendChild(figcaption);
-    });
+      });
+    }
+    display(works);
+
+    
+    //filtrage(3);
+   
+    
+    
 
     // Creer les buttons de filtres
     const filtres = document.querySelector(".filtres");
     // Le button Tous
     const btnTous = document.createElement("button");
       btnTous.textContent = "Tous";
+      btnTous.categoryId === 0;
       filtres.appendChild(btnTous);
+      
     // Les buttons des categories
     categories.forEach((category) => {
         const btn = document.createElement("button");
         btn.textContent = category.name;
         btn.id = category.id;
-        filtres.appendChild(btn);
-      });
 
+        const buttons = document.querySelectorAll(".filtres button");
+
+        // Pour chaque bouton de filtre - ecouteur d'evenement de clic
+        buttons.forEach((button) => {
+          btn.addEventListener("click",async function(cat){
+            const categoryId = cat.target.id;
+
+            // Filtrer en fonction de la categorie sélectionne
+            const filteredGallery =
+              categoryId !== "0"
+                ? works.filter((api) => api.categoryId == categoryId)
+                : works;
+
+            // Changer la couleur de button 
+            cat.target.style.backgroundColor = "#1D6154";
+            cat.target.style.color = "#ffffff";
+        
+            // Afficher les projets filtrees dans la galerie
+            display(filteredGallery);
+
+          });
+        });
+
+        filtres.appendChild(btn);
+        
+       
+    });
+
+      
+      
       
 }
 getworks();

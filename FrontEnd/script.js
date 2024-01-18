@@ -40,7 +40,7 @@ async function getworks() {
     // Le button Tous
     const btnTous = document.createElement("button");
       btnTous.textContent = "Tous";
-      btnTous.categoryId === 0;
+      btnTous.id = 0;
       filtres.appendChild(btnTous);
       
     // Les buttons des categories
@@ -49,30 +49,34 @@ async function getworks() {
         btn.textContent = category.name;
         btn.id = category.id;
 
-        const buttons = document.querySelectorAll(".filtres button");
+        filtres.appendChild(btn);
 
+        }); 
+
+
+        const buttons = document.querySelectorAll(".filtres button");
+      console.log(buttons);
         // Pour chaque bouton de filtre - ecouteur d'evenement de clic
         buttons.forEach((button) => {
-          btn.addEventListener("click",async function(cat){
+          button.addEventListener("click",async function(cat){
             const categoryId = cat.target.id;
-
+            console.log(categoryId);
             // Filtrer en fonction de la categorie sélectionne
             const filteredGallery =
               categoryId !== "0"
                 ? works.filter((api) => api.categoryId == categoryId)
                 : works;
 
-            // Changer la couleur de button 
-            cat.target.style.backgroundColor = "#1D6154";
-            cat.target.style.color = "#ffffff";
+            // Changer la couleur de button avec une add et remove
+           
         
             // Afficher les projets filtrees dans la galerie
             display(filteredGallery);
 
-          });
+          
         });
 
-        filtres.appendChild(btn);
+        
         
        
     });

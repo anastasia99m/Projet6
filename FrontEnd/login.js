@@ -21,7 +21,19 @@ let submit = document.getElementById("submit");
               
             const reponseuser = await reponse.json();
             console.log(reponseuser);
-            
+
+            if(reponse.ok){
+              location.href='./index.html';
+              }
+              else if(reponse.status === 401) {
+                alert("Email ou mot de passe incorrecte");
+            } else {
+              alert("Remplissez les champs s'il vous plait!");
+
+            }
+          
+        
+          
     });
 
 

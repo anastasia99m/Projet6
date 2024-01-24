@@ -10,6 +10,7 @@ async function getworks() {
     
     const sectionGallery = document.querySelector(".gallery");//Rentrer dans la balise gallery
     
+    
 
     // Afficher la gallerie
     function display (travaux){
@@ -34,7 +35,6 @@ async function getworks() {
    
     
     
-
     // Creer les buttons de filtres
     const filtres = document.querySelector(".filtres");
     // Le button Tous
@@ -46,28 +46,42 @@ async function getworks() {
     // Les buttons des categories
     categories.forEach((category) => {
         const btn = document.createElement("button");
+        
         btn.textContent = category.name;
         btn.id = category.id;
 
         filtres.appendChild(btn);
-
+        
         }); 
 
+       
 
         const buttons = document.querySelectorAll(".filtres button");
       console.log(buttons);
         // Pour chaque bouton de filtre - ecouteur d'evenement de clic
         buttons.forEach((button) => {
           button.addEventListener("click",async function(cat){
+            
             const categoryId = cat.target.id;
             console.log(categoryId);
+            
+            // Changer la couleur de button
+            buttons.forEach((button) => {
+              button.style.backgroundColor = "#ffffff";
+              button.style.color = "#1D6154";
+            });
+            cat.target.style.backgroundColor = "#1D6154";
+            cat.target.style.color = "#ffffff";
+      
             // Filtrer en fonction de la categorie sélectionne
             const filteredGallery =
               categoryId !== "0"
                 ? works.filter((api) => api.categoryId == categoryId)
                 : works;
 
-            // Changer la couleur de button avec une add et remove
+            
+           
+           
            
         
             // Afficher les projets filtrees dans la galerie

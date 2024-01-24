@@ -24,6 +24,7 @@ let submit = document.getElementById("submit");
 
             if(reponse.ok){
               location.href='./index.html';
+              window.localStorage.setItem('token', user.token);
               }
               else if(reponse.status === 401) {
                 alert("Email ou mot de passe incorrecte");

@@ -220,11 +220,11 @@ footer nav ul {
 	border: 1px solid #1D6154;
 	width: 100px;
 	height: 37px;
-	background: #FFFEF8;
+	
 
 }
 
-.button{
+.button{   /*button Se connecter*/
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;

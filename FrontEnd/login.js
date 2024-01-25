@@ -4,6 +4,7 @@ let submit = document.getElementById("submit");
             let inputEmail = document.querySelector("#email").value;
             let inputPassword = document.querySelector("#password").value;
             
+
         
             let user = {
                 email: inputEmail,
@@ -21,10 +22,14 @@ let submit = document.getElementById("submit");
               
             const reponseuser = await reponse.json();
             console.log(reponseuser);
+            console.log(reponseuser.token);
 
+            
             if(reponse.ok){
+              
+              window.localStorage.setItem("token", reponseuser.token);
               location.href='./index.html';
-              window.localStorage.setItem('token', user.token);
+             
               }
               else if(reponse.status === 401) {
                 alert("Email ou mot de passe incorrecte");
@@ -33,8 +38,8 @@ let submit = document.getElementById("submit");
 
             }
           
-        
+      
+          
           
     });
-
 

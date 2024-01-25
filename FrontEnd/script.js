@@ -16,7 +16,8 @@ async function getworks() {
     function display (travaux){
       sectionGallery.innerHTML = ""; //Vider le contenu de la gallery existante
       travaux.forEach(works => {
-        const figure = document.createElement("figure");// Creer nouvelle balise figure 
+        const figure = document.createElement("figure");// Creer nouvelle balise figure
+        figure.id = "figure" + works.id;
         const imageElement = document.createElement("img");
         imageElement.src = works.imageUrl;
         const figcaption = document.createElement("figcation");
@@ -79,7 +80,7 @@ async function getworks() {
                 ? works.filter((api) => api.categoryId == categoryId)
                 : works;
 
-            
+          
            
            
            
@@ -102,4 +103,47 @@ async function getworks() {
 getworks();
 
 
+function login(){
+  var token = window.localStorage.getItem("token");
+  console.log(token);
+  if(token != null){
+    hideElement();
+  }
+  
+}
+login();
 
+function hideElement(){
+  document.getElementsByClassName("filtres")[0].style.display = "none";
+
+  // Basculer entre les login et logout
+  var isLoggedIn = false;
+  
+  const loginStateElement = document.getElementById("log");
+  if (isLoggedIn) {
+    // Si connecté, changer l'état à déconnecté (logout)
+    loginStateElement.textContent = "login";
+    isLoggedIn = false;
+} else {
+    // Si déconnecté, changer l'état à connecté (login)
+    loginStateElement.textContent = "logout";
+    
+
+    loginStateElement.addEventListener("click",async function logout(){
+      localStorage.removeItem("token");
+      location.href='./index.html';
+      isLoggedIn = true;
+      loginStateElement.textContent = "login";
+    });
+   
+}
+}
+
+
+
+
+
+
+  
+
+    

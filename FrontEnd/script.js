@@ -119,14 +119,19 @@ function hideElement(){
   // Basculer entre les login et logout
   var isLoggedIn = false;
   
+
   const loginStateElement = document.getElementById("log");
   if (isLoggedIn) {
     // Si connecté, changer l'état à déconnecté (logout)
     loginStateElement.textContent = "login";
     isLoggedIn = false;
+  
 } else {
     // Si déconnecté, changer l'état à connecté (login)
     loginStateElement.textContent = "logout";
+    var elementVisible = document.getElementById('modifier');
+    elementVisible.classList.remove('invisible');
+    
     
 
     loginStateElement.addEventListener("click",async function logout(){
@@ -139,7 +144,27 @@ function hideElement(){
 }
 }
 
+// Sélectionner les éléments nécessaires
+var openModalBtn = document.getElementById('modifier');
+var closeModalBtn = document.getElementById('closeModalBtn');
+var modal = document.getElementById('myModal');
 
+// Ouvrir la modal
+openModalBtn.addEventListener('click', function() {
+  modal.style.display = 'block';
+});
+
+// Fermer la modal
+closeModalBtn.addEventListener('click', function() {
+  modal.style.display = 'none';
+});
+
+// Fermer la modal si l'utilisateur clique en dehors du contenu de la modal
+window.addEventListener('click', function(event) {
+  if (event.target == modal) {
+    modal.style.display = 'none';
+  }
+});
 
 
 

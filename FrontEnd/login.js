@@ -25,6 +25,7 @@ let submit = document.getElementById("submit");
             console.log(reponseuser.token);
 
             
+            var errorMessage = document.querySelector('.error');
             if(reponse.ok){
               
               window.localStorage.setItem("token", reponseuser.token);
@@ -32,9 +33,10 @@ let submit = document.getElementById("submit");
              
               }
               else if(reponse.status === 401) {
-                alert("Email ou mot de passe incorrecte");
+                errorMessage.textContent = 'Email ou mot de passe incorrecte !!';
+               
             } else {
-              alert("Remplissez les champs s'il vous plait!");
+              errorMessage.textContent = 'Remplissez les champs s"il vous plait! !!';
 
             }
           

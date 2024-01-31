@@ -103,6 +103,7 @@ async function getworks() {
 getworks();
 
 
+//------code de l'interface utilisateur---------
 function login(){
   var token = window.localStorage.getItem("token");
   console.log(token);
@@ -144,31 +145,88 @@ function hideElement(){
 }
 }
 
+
+//------Modal---------
+
 // Sélectionner les éléments nécessaires
 var openModalBtn = document.getElementById('modifier');
 var closeModalBtn = document.getElementById('closeModalBtn');
-var modal = document.getElementById('myModal');
+var closeModalBtn2 = document.getElementById('closeModalBtn2');
+var modal1 = document.getElementById('myModal');
+var modal2 = document.getElementById('myModal2');
+const buttonFirstModal = document.querySelector(".button"); //bouton première modal
+const arrow = document.querySelector(".arrow"); //récuperation de la flèche de la deuxième modale
 
 // Ouvrir la modal
 openModalBtn.addEventListener('click', function() {
-  modal.style.display = 'block';
+  modal1.style.display = 'block';
 });
 
 // Fermer la modal
 closeModalBtn.addEventListener('click', function() {
-  modal.style.display = 'none';
+  modal1.style.display = 'none';
+});
+closeModalBtn2.addEventListener('click', function() {
+  modal2.style.display = 'none';
 });
 
 // Fermer la modal si l'utilisateur clique en dehors du contenu de la modal
 window.addEventListener('click', function(event) {
-  if (event.target == modal) {
-    modal.style.display = 'none';
+  if (event.target == modal1) {
+    modal1.style.display = 'none';
+  }
+  if (event.target == modal2) {
+    modal2.style.display = 'none';
   }
 });
 
+buttonFirstModal.addEventListener("click", openSecondModal); //ajout d'un gestionnaire d'évement qui exécute la fonction openSecondModal
 
+function openSecondModal() {
+  modal1.style.display = "none"; //première modal en none
+  modal2.style.display = "block"; //seconde modal en block
+}
 
+//retourne à la première modal
+arrow.addEventListener("click", backToFirstModal); //ajout d'un gestionnaire d'évement qui exécute la fonction backToFirstModal
 
-  
+function backToFirstModal() {
+  modal1.style.display = "block"; //première modal en block
+  modal2.style.display = "none"; //seconde modal en none
+}
+
+/*async function getworksModal() {
+  const reponse =  await fetch(`http://localhost:5678/api/works`);
+  const worksModal =  await reponse.json();
+  console.log(worksModal);
+
+  // Simulons des données de galerie pour l'exemple
+
+  const workContainer = document.querySelector(".workContainer");//Rentrer dans la balise gallery
+  function displayModal (travauxModal){
+    
+    travauxModal.forEach(worksModal => {
+      const figure = document.createElement("figure");// Creer nouvelle balise figure
+      figure.id = "figure" + worksModal.id;
+      const imageElement = document.createElement("img");
+      imageElement.src = worksModal.imageUrl;
+      const figcaption = document.createElement("figcation");
+      figcaption.innerHTML = worksModal.title;
+
+ 
+      workContainer.appendChild(figure);
+      figure.appendChild(imageElement);
+      figure.appendChild(figcaption);
+    });
+  }
+  displayModal(worksModal);
+  }
+
+getworksModal();*/
 
     
+
+
+
+
+

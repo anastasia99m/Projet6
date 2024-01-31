@@ -269,6 +269,10 @@ footer nav ul {
 	height: 100%;
 	background-color: rgba(0,0,0,0.5); /* Fond semi-transparent */
   }
+
+.modal2{
+	display: none;
+}
   
   /* Style du contenu de la modal */
   .modal-content {
@@ -280,13 +284,115 @@ footer nav ul {
 	border-radius: 10px;
 	padding: 20px;
 	text-align: center;
+	
+  }
+  .modal-content div{
+	display: flex;
+	flex-direction: row;
+  }
+  .modal-content p{
+	color: #000;
+	text-align: center;
+	font-size: 26px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	margin-top: 20px;
   }
   
   /* Style du bouton pour fermer la modal */
   .close {
 	position: absolute;
-	top: 10px;
-	right: 10px;
+	top: 15px;
+	right: 25px;
 	font-size: 20px;
 	cursor: pointer;
+  }
+  .arrow {
+	position: absolute;
+	top: 15px;
+	left: 25px;
+	font-size: 20px;
+	cursor: pointer;
+  }
+
+  /* Style du bouton pour la ligne dans la modal */
+  .ligne {
+	width: 420px;
+	height: 1px;
+	background-color: #B3B3B3;
+	margin-top: 25px;
+}
+
+/* Style Modal2 */
+.case {
+	background-color: #e8f1f6;
+	height: 170px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 10px;
+	margin: 25px;
+  }
+  
+  .case svg {
+	margin: 10px 0;
+  }
+  
+  .case label {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none;
+	color: #306685;
+	border-radius: 50px;
+	background-color: #cbd6dc;
+	border: none;
+	width: 173px;
+	height: 36px;
+  }
+  
+  .case input {
+	display: none;
+  }
+  
+  .case p {
+	color: #444;
+	text-align: center;
+	font-family: Work Sans;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+  }
+  
+  .case img,
+  .content-preview img {
+	width: 129px;
+	height: 100%;
+  }
+  
+  .form-photo {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 25px;
+  }
+  
+  .form-photo label {
+	display: inline-block;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	display: flex;
+	align-items: flex-start;
+  }
+  
+  .form-photo input,
+  select {
+	width: 420px;
+	height: 51px;
+	background-color: #fff;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	border: none;
   }

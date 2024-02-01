@@ -275,7 +275,7 @@ footer nav ul {
 }
   
   /* Style du contenu de la modal */
-  .modal-content {
+.modal-content {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -284,13 +284,14 @@ footer nav ul {
 	border-radius: 10px;
 	padding: 20px;
 	text-align: center;
+	width: 500px;
 	
-  }
-  .modal-content div{
+}
+  /*.modal-content div{
 	display: flex;
 	flex-direction: row;
-  }
-  .modal-content p{
+  }*/
+.modal-content p{
 	color: #000;
 	text-align: center;
 	font-size: 26px;
@@ -298,33 +299,66 @@ footer nav ul {
 	font-weight: 400;
 	line-height: normal;
 	margin-top: 20px;
-  }
+}
   
-  /* Style du bouton pour fermer la modal */
-  .close {
+/* Style du bouton pour fermer la modal */
+.close {
 	position: absolute;
 	top: 15px;
 	right: 25px;
 	font-size: 20px;
 	cursor: pointer;
-  }
-  .arrow {
+}
+.arrow {
 	position: absolute;
 	top: 15px;
 	left: 25px;
 	font-size: 20px;
 	cursor: pointer;
-  }
+}
 
-  /* Style du bouton pour la ligne dans la modal */
-  .ligne {
-	width: 420px;
+/* La ligne dans la modal */
+.ligne {
+	width: 100%;
 	height: 1px;
 	background-color: #B3B3B3;
 	margin-top: 25px;
 }
+/* Affichage des images dans la modal */
+.workContainer{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 9.8px;
+	padding: 35px;
+}
+.workContainer img{
+	width: 78.123px;
+	height: 104.08px;
+	
+}
+/* La corbeille dans la modal */
+.icon-container {
+	position: relative;
+	top: 25px;
+	right: -55px;
+	padding: 5px;
+	background: #141414;
+	border-radius: 2px;
+	color: white;
+	cursor: pointer;
+	width: 9px;
+	height: 11px;
+}
+ 
+.icon-container i {
+	font-size: 12px;
+	display: flex;
+	justify-content: center;
+}
 
-/* Style Modal2 */
+
+/***** Style Modal2 *****/
 .case {
 	background-color: #e8f1f6;
 	height: 170px;
@@ -332,8 +366,8 @@ footer nav ul {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 10px;
 	margin: 25px;
+	padding-bottom: 15px;
   }
   
   .case svg {
@@ -390,9 +424,11 @@ footer nav ul {
   
   .form-photo input,
   select {
-	width: 420px;
+	width: 100%;
 	height: 51px;
 	background-color: #fff;
 	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 	border: none;
   }
+
+

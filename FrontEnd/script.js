@@ -195,38 +195,46 @@ function backToFirstModal() {
   modal2.style.display = "none"; //seconde modal en none
 }
 
-/*async function getworksModal() {
-  const reponse =  await fetch(`http://localhost:5678/api/works`);
-  const worksModal =  await reponse.json();
-  console.log(worksModal);
 
-  // Simulons des données de galerie pour l'exemple
+async function getworksModal() {
+  const  reponseModal = await fetch(`http://localhost:5678/api/works`);
+  const worksModal = await reponseModal.json();
+ 
+  const sectionGalleryModal = document.querySelector(".workContainer");//Rentrer dans la balise gallery
+  
+  
 
-  const workContainer = document.querySelector(".workContainer");//Rentrer dans la balise gallery
-  function displayModal (travauxModal){
-    
-    travauxModal.forEach(worksModal => {
-      const figure = document.createElement("figure");// Creer nouvelle balise figure
-      figure.id = "figure" + worksModal.id;
+  // Afficher la gallerie dans la Modal
+  function display (travaux){
+    sectionGalleryModal.innerHTML = ""; //Vider le contenu de la gallery existante
+    travaux.forEach(worksModal => {
+      const figureModal = document.createElement("figureModal");// Creer nouvelle balise figure
+      figureModal.id = "figureModal" + worksModal.id;
       const imageElement = document.createElement("img");
       imageElement.src = worksModal.imageUrl;
-      const figcaption = document.createElement("figcation");
-      figcaption.innerHTML = worksModal.title;
 
+      const imageContainer = document.createElement('div');
+      imageContainer.classList.add('image-container');
+      const iconContainer = document.createElement('div');
+      iconContainer.classList.add('icon-container');
+      const deleteIcon = document.createElement('i');
+
+
+      deleteIcon.classList.add('fa-solid');
+      deleteIcon.classList.add('fa-trash-can');
+   
  
-      workContainer.appendChild(figure);
-      figure.appendChild(imageElement);
-      figure.appendChild(figcaption);
+
+      iconContainer.appendChild(deleteIcon);
+      imageContainer.appendChild(iconContainer);
+      sectionGalleryModal.appendChild(figureModal);
+      figureModal.appendChild(imageContainer);
+      imageContainer.appendChild(imageElement);
+     
+      
+      
     });
   }
-  displayModal(worksModal);
-  }
-
-getworksModal();*/
-
-    
-
-
-
-
-
+  display(worksModal);
+  };
+  getworksModal();

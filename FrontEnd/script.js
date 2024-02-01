@@ -19,7 +19,9 @@ async function getworks() {
 
       travaux.forEach(works => {
         const figure = document.createElement("figure");// Creer nouvelle balise figure
+        figure.classList.add('image-container');
         figure.id = "figure" + works.id;
+        figure.setAttribute("data-gallery", works.id)
         const imageElement = document.createElement("img");
         imageElement.src = works.imageUrl;
         const figcaption = document.createElement("figcation");
@@ -37,6 +39,7 @@ async function getworks() {
           const imageContainer = document.createElement('div');
           imageContainer.classList.add('image-container');
           imageContainer.id = "figureModal" + works.id;
+          imageContainer.setAttribute("data-gallery", works.id)
           const iconContainer = document.createElement('div');
           iconContainer.classList.add('icon-container');
           const deleteIcon = document.createElement('i');
@@ -246,7 +249,6 @@ function backToFirstModal() {
 }
 
 
-
       var images = document.querySelectorAll('.image-container');
 
       //L'evenement click a chaque icone poubelle
@@ -256,20 +258,21 @@ function backToFirstModal() {
           });
       });
 
-      //Supprimer une image
+      
+      //Supprimer l'image
       function supprimerImage(element) {
           // Récupérer le conteneur d'image parent
           var container = element.parentNode;
 
+          // Récupérer la galerie 
+          var gallery = container.getAttribute('data-gallery');
 
-          const reponseSuppression = fetch ("http://localhost:5678/api/works/"+ boutonSuppression.id, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer '+token
-                    },
-                })
-
-          //Supprimer le conteneur d'image du DOM
-          container.parentNode.removeChild(container);
+          // Supprimer toutes les images avec le même attribut data-gallery
+          document.querySelectorAll('.gallery [data-gallery="' + gallery + '"]').forEach(function(image) {
+            image.parentNode.removeChild(image);
+          });
+          
+          document.querySelectorAll('.workContainer [data-gallery="' + gallery + '"]').forEach(function(image) {
+            image.parentNode.removeChild(image);
+          });
       }

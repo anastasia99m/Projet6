@@ -15,6 +15,8 @@ async function getworks() {
     // Afficher la gallerie
     function display (travaux){
       sectionGallery.innerHTML = ""; //Vider le contenu de la gallery existante
+      const sectionGalleryModal = document.querySelector(".workContainer");//Rentrer dans la balise gallery
+
       travaux.forEach(works => {
         const figure = document.createElement("figure");// Creer nouvelle balise figure
         figure.id = "figure" + works.id;
@@ -27,7 +29,37 @@ async function getworks() {
         sectionGallery.appendChild(figure);
         figure.appendChild(imageElement);
         figure.appendChild(figcaption);
-      });
+
+        
+          const imageElementModal = document.createElement("img");
+          imageElementModal.src = works.imageUrl;
+    
+          const imageContainer = document.createElement('div');
+          imageContainer.classList.add('image-container');
+          imageContainer.id = "figureModal" + works.id;
+          const iconContainer = document.createElement('div');
+          iconContainer.classList.add('icon-container');
+          const deleteIcon = document.createElement('i');
+    
+          iconContainer.addEventListener('click', function() {
+            supprimerImage(this);
+          });
+    
+          deleteIcon.classList.add('fa-solid');
+          deleteIcon.classList.add('fa-trash-can');
+       
+     
+    
+          iconContainer.appendChild(deleteIcon);
+          imageContainer.appendChild(iconContainer);
+          sectionGalleryModal.appendChild(imageContainer);
+          imageContainer.appendChild(imageElementModal);
+         
+          
+          
+        });
+
+      
     }
     display(works);
 
@@ -47,13 +79,31 @@ async function getworks() {
     // Les buttons des categories
     categories.forEach((category) => {
         const btn = document.createElement("button");
-        
+        //---Liste des categories dans modal2
+        const categorieSelect = document.getElementById("categorie");
+
         btn.textContent = category.name;
         btn.id = category.id;
 
         filtres.appendChild(btn);
+
         
-        }); 
+          //création des catégories
+          const optionElement = document.createElement("option");
+          optionElement.value = category.id;
+          optionElement.textContent = category.name;
+
+          //mettre les catégories des les options du formulaire
+          categorieSelect.appendChild(optionElement);
+        
+      })
+      
+      //-----Fin d'ajout de la liste des categories dans la modal2  
+
+
+        
+        
+        
 
        
 
@@ -196,45 +246,30 @@ function backToFirstModal() {
 }
 
 
-async function getworksModal() {
-  const  reponseModal = await fetch(`http://localhost:5678/api/works`);
-  const worksModal = await reponseModal.json();
- 
-  const sectionGalleryModal = document.querySelector(".workContainer");//Rentrer dans la balise gallery
-  
-  
 
-  // Afficher la gallerie dans la Modal
-  function display (travaux){
-    sectionGalleryModal.innerHTML = ""; //Vider le contenu de la gallery existante
-    travaux.forEach(worksModal => {
-      const figureModal = document.createElement("figureModal");// Creer nouvelle balise figure
-      figureModal.id = "figureModal" + worksModal.id;
-      const imageElement = document.createElement("img");
-      imageElement.src = worksModal.imageUrl;
+      var images = document.querySelectorAll('.image-container');
 
-      const imageContainer = document.createElement('div');
-      imageContainer.classList.add('image-container');
-      const iconContainer = document.createElement('div');
-      iconContainer.classList.add('icon-container');
-      const deleteIcon = document.createElement('i');
+      //L'evenement click a chaque icone poubelle
+      document.querySelectorAll('icon-container').forEach(function(icon) {
+          icon.addEventListener('click', function() {
+              supprimerImage(this);
+          });
+      });
+
+      //Supprimer une image
+      function supprimerImage(element) {
+          // Récupérer le conteneur d'image parent
+          var container = element.parentNode;
 
 
-      deleteIcon.classList.add('fa-solid');
-      deleteIcon.classList.add('fa-trash-can');
-   
- 
+          const reponseSuppression = fetch ("http://localhost:5678/api/works/"+ boutonSuppression.id, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer '+token
+                    },
+                })
 
-      iconContainer.appendChild(deleteIcon);
-      imageContainer.appendChild(iconContainer);
-      sectionGalleryModal.appendChild(figureModal);
-      figureModal.appendChild(imageContainer);
-      imageContainer.appendChild(imageElement);
-     
-      
-      
-    });
-  }
-  display(worksModal);
-  };
-  getworksModal();
+          //Supprimer le conteneur d'image du DOM
+          container.parentNode.removeChild(container);
+      }

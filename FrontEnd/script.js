@@ -262,11 +262,37 @@ function backToFirstModal() {
       //Supprimer l'image
       function supprimerImage(element) {
           // Récupérer le conteneur d'image parent
+          const token = localStorage.getItem("token");
           var container = element.parentNode;
 
           // Récupérer la galerie 
           var gallery = container.getAttribute('data-gallery');
 
+          const id = gallery.id;
+          const options = {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          };
+          fetch("http://localhost:5678/api/works/" + id, options)
+            .then((response) => {
+              if (!response.ok) {
+                // Si la réponse n'est pas OK, on lance une erreur qui sera capturée dans le bloc catch
+                throw new Error(`Erreur, status = ${response.status}`);
+              }
+              return response.text();
+            })
+            .then(() => {
+              // Si la suppression reussit, on affiche un message dans la console
+              console.log("Suppression réussie");
+            })
+            // Capture des erreurs lors de la requête
+            .catch((error) => {
+              console.error(error);
+            });
+            
           // Supprimer toutes les images avec le même attribut data-gallery
           document.querySelectorAll('.gallery [data-gallery="' + gallery + '"]').forEach(function(image) {
             image.parentNode.removeChild(image);
@@ -275,4 +301,114 @@ function backToFirstModal() {
           document.querySelectorAll('.workContainer [data-gallery="' + gallery + '"]').forEach(function(image) {
             image.parentNode.removeChild(image);
           });
+
+          
       }
+      
+
+
+
+/// Ajout de l'image dans la modal
+
+const contentAddImg = document.querySelector(".case");
+
+const contentPreview = document.querySelector(".content-preview");
+// bouton qui permet de mettre une image
+const addImgBtn = document.getElementById("add-img-btn");
+
+//création d'un element image
+const previewImgSelected = document.createElement("img");
+
+//event sur le boutton d'ajout d'image
+addImgBtn.addEventListener("input", () => {
+  //on vérifie qu'un fichier est sélectionné
+  if (addImgBtn.files.length > 0) {
+    //récupération du fichier
+    const selectedImage = addImgBtn.files[0];
+
+    //vérifications de la taille de l'image (en octets)
+    const maxSizeInBytes = 4 * 1024 * 1024; // 4 Mo
+    if (selectedImage.size > maxSizeInBytes) {
+      //la span pour afficher un message d'erreur image trop grande
+      const errorSizeImg = document.getElementById("message-erreur-taille-image");
+      //ajout du texte dans la span
+      errorSizeImg.textContent =
+        "La taille de l'image ne doit pas dépasser 4 mo.";
+      //reinialisation du champs image
+      addImgBtn.value = "";
+    } else {
+      //creation d'un objet URL pour l'image sélectionné
+      const selectedImageUrl = URL.createObjectURL(selectedImage);
+
+      //ajout de l'image selectionne dans l'element image creer
+      previewImgSelected.src = selectedImageUrl;
+
+      //masque le boutton d'ajout d'image pour affchier la preview
+      contentAddImg.style.display = "none";
+
+      //affchier la preview
+      contentPreview.style.display = "block";
+
+      //mettre l'image sélectionné dans "content preview"
+      contentPreview.appendChild(previewImgSelected);
+    }
+    }
+  });
+  
+
+
+
+
+    /////add work  
+      function addWork() {
+        //récupération du formulaire
+        const form = document.getElementById("addWorkForm");
+        const token = localStorage.getItem("token");
+        //récupérer de la span "erreur un champ n'est pas remplie"
+        const erreurChampVide = document.getElementById("error-messageChamp");
+      
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+      
+          //récupération des champs du formulaire
+          const titleChamp = document.getElementById("title").value.trim();
+          const selectCategoriesChamp = document.getElementById("categorie").value;
+      
+          //vérification du remplisage des champs
+          if (
+            titleChamp === "" ||
+            selectCategoriesChamp === "" ||
+            addImgBtn.files.length === 0
+          ) {
+            erreurChampVide.textContent = "Remplissez les champs s-il vous plait !!";
+          } else {
+            //remplisage de form
+            const formData = new FormData();
+            formData.append("image", addImgBtn.files[0]);
+            formData.append("title", titleChamp);
+            formData.append("category", selectCategoriesChamp);
+      
+            fetch("http://localhost:5678/api/works", {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              body: formData,
+            })
+              //traitement de la réponse
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error("Erreur lors de l'ajout de l'œuvre");
+                }
+                return response.text();
+              })
+              .then(() => {
+                console.log("Ajout réussie");
+
+              })
+              
+          }
+        });
+      }
+      
+      addWork();
